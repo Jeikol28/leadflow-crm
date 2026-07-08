@@ -1,0 +1,34 @@
+namespace LeadFlow.Application.DTOs.CompanySettings
+{
+    // Recibe los ajustes editables del perfil empresarial.
+    public class UpdateCompanySettingsRequest
+    {
+        public string Name { get; set; } = string.Empty;
+
+        public string? LegalName { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Phone { get; set; }
+
+        public string? IdentificationNumber { get; set; }
+
+        public string? Address { get; set; }
+
+        public string? Province { get; set; }
+
+        public string? Canton { get; set; }
+
+        public string? Website { get; set; }
+
+        public string? LogoUrl { get; set; }
+
+        public string DefaultCurrency { get; set; } = "CRC";
+
+        public decimal DefaultTaxRate { get; set; } = 13;
+
+        public string QuotePrefix { get; set; } = "LF";
+
+        public string? DefaultQuoteTerms { get; set; }
+    }
+}

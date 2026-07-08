@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(pnpm build *)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\jeiko\\\\OneDrive\\\\Desktop\\\\Ucr\\\\LeadFlow CR\\\\Frontend\\\\LeadFlow.Frontend\\\\src\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)"
+    ]
+  }
+}

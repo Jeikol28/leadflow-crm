@@ -1,0 +1,30 @@
+# ===== .NET (backend) =====
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# ===== Node / Frontend =====
+node_modules/
+dist/
+dist-ssr/
+output/
+*.local
+
+# ===== Entorno / secretos (NUNCA subir) =====
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+secrets.json
+
+# ===== Artefactos y material de referencia =====
+*.zip
+stitch-reference/
+stitch_export/
+
+# ===== Sistema operativo / editor =====
+.DS_Store
+Thumbs.db
+*.swp
