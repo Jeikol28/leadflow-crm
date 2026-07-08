@@ -45,6 +45,10 @@ using LeadFlow.Infrastructure.Services.AI;
 using LeadFlow.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
+// Npgsql: mantiene el comportamiento clasico de fechas (evita exigir DateTimeKind.Utc al
+// portar desde SQL Server). Debe configurarse antes de registrar el DbContext.
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 const string corsPolicyName = "LeadFlowFrontendPolicy";
 const string loginRateLimitPolicyName = "LoginRateLimitPolicy";
@@ -140,7 +144,7 @@ builder.Services.AddRateLimiter(options =>
 
 // Registra el DbContext para conectar la API con SQL Server usando Entity Framework Core.
 builder.Services.AddDbContext<LeadFlowDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registra los servicios de autenticacion usados por los controladores de la API.
 builder.Services.AddScoped<IAuthService, AuthService>();

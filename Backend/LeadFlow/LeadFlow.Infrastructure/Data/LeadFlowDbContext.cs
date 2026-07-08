@@ -49,7 +49,8 @@ namespace LeadFlow.Infrastructure.Data
                 .SelectMany(entityType => entityType.GetProperties())
                 .Where(property => property.ClrType == typeof(decimal) || property.ClrType == typeof(decimal?)))
             {
-                property.SetColumnType("decimal(18,2)");
+                property.SetPrecision(18);
+                property.SetScale(2);
             }
 
             // Configura las relaciones principales del modelo inicial de LeadFlow.
