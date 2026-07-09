@@ -171,18 +171,10 @@ namespace LeadFlow.Infrastructure.Services.Customers
 
         private IQueryable<Customer> ApplyCustomerScope(IQueryable<Customer> query)
         {
-            if (CanManageCompanyScope())
-            {
-                return query;
-            }
-
-            var userId = GetCurrentUserId();
-
-            return query.Where(customer =>
-                customer.Leads.Any(lead => lead.IsActive && lead.AssignedUserId == userId) ||
-                customer.Tasks.Any(task => task.IsActive && task.AssignedUserId == userId) ||
-                customer.Interactions.Any(interaction => interaction.IsActive && interaction.UserId == userId) ||
-                customer.Quotes.Any(quote => quote.IsActive && quote.CreatedByUserId == userId));
+            // Los clientes son datos compartidos de la empresa: todos los roles ven todos
+            // los clientes de su empresa. El aislamiento multiempresa por CompanyId ya se
+            // aplica antes en cada consulta. (Los leads y tareas si mantienen alcance por usuario.)
+            return query;
         }
 
         private static void ValidateCustomerInput(CreateCustomerRequest request)
