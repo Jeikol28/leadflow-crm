@@ -177,8 +177,9 @@ builder.Services.AddScoped<IQuoteService, QuoteService>();
 builder.Services.AddScoped<IQuotePdfService, QuotePdfService>();
 builder.Services.AddScoped<IQuoteEmailService, QuoteEmailService>();
 
-// Registra el servicio de envio de correos (SMTP real via MailKit).
-builder.Services.AddScoped<IEmailSender, LeadFlow.Infrastructure.Services.Email.SmtpEmailSender>();
+// Registra el envio de correos por la API HTTP de Brevo (funciona en hosts que
+// bloquean el puerto SMTP saliente, como Render).
+builder.Services.AddHttpClient<IEmailSender, LeadFlow.Infrastructure.Services.Email.BrevoApiEmailSender>();
 
 // Registra el servicio del modulo Users para administracion de usuarios de empresa.
 builder.Services.AddScoped<IUserService, UserService>();
