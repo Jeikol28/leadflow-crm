@@ -9,6 +9,12 @@ RUN dotnet publish LeadFlow.Api/LeadFlow.Api.csproj -c Release -o /app/publish /
 
 # ---- Etapa de ejecución (imagen liviana) ----
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
+# Fuentes TrueType para la generación de PDF (PdfSharpCore) en Linux.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends fonts-dejavu-core \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY --from=build /app/publish .
 

@@ -49,6 +49,10 @@ using Microsoft.AspNetCore.Mvc;
 // portar desde SQL Server). Debe configurarse antes de registrar el DbContext.
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+// Fuente para la generacion de PDF (PdfSharpCore) que funciona en el contenedor Linux.
+PdfSharpCore.Fonts.GlobalFontSettings.FontResolver =
+    new LeadFlow.Infrastructure.Services.Quotes.LeadFlowFontResolver();
+
 var builder = WebApplication.CreateBuilder(args);
 const string corsPolicyName = "LeadFlowFrontendPolicy";
 const string loginRateLimitPolicyName = "LoginRateLimitPolicy";
@@ -93,7 +97,18 @@ builder.Services.AddCors(options =>
     options.AddPolicy(corsPolicyName, policy =>
     {
         policy
-            .WithOrigins(allowedOrigins)
+            .SetIsOriginAllowed(origin =>
+            {
+                // Permite los origenes configurados y cualquier subdominio *.vercel.app
+                // (las URLs de preview de Vercel cambian en cada despliegue).
+                if (allowedOrigins.Contains(origin))
+                {
+                    return true;
+                }
+
+                return Uri.TryCreate(origin, UriKind.Absolute, out var uri) &&
+                    uri.Host.EndsWith(".vercel.app", StringComparison.OrdinalIgnoreCase);
+            })
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
