@@ -9,6 +9,9 @@ namespace LeadFlow.Infrastructure.Services.Quotes
     // Mapea cualquier familia pedida (por ejemplo "Arial") a la fuente disponible.
     public class LeadFlowFontResolver : IFontResolver
     {
+        // Fuente por defecto cuando PdfSharpCore no puede resolver una familia especifica.
+        public string DefaultFontName => "Arial";
+
         private static readonly string[] RegularCandidates =
         {
             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
